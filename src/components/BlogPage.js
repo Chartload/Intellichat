@@ -5,12 +5,15 @@ import 'aos/dist/aos.css';
 import './BlogPage.css';
 
 // Animated Counter Component
+// Animated Counter Component - Fixed
 const AnimatedCounter = ({ value, label, description, duration = 2000 }) => {
   const [count, setCount] = useState(0);
   const counterRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const element = counterRef.current;
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -20,13 +23,13 @@ const AnimatedCounter = ({ value, label, description, duration = 2000 }) => {
       { threshold: 0.1 }
     );
 
-    if (counterRef.current) {
-      observer.observe(counterRef.current);
+    if (element) {
+      observer.observe(element);
     }
 
     return () => {
-      if (counterRef.current) {
-        observer.unobserve(counterRef.current);
+      if (element) {
+        observer.unobserve(element);
       }
     };
   }, []);
@@ -62,7 +65,6 @@ const AnimatedCounter = ({ value, label, description, duration = 2000 }) => {
     </div>
   );
 };
-
 // Auto-scrolling Reviews Component
 const ScrollingReviews = ({ reviews }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
